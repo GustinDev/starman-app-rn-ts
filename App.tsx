@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import Header from './src/components/Header/Header';
+import { SafeAreaView } from 'react-native';
+import Home from './src/views/Home/Home';
 
 export default function App() {
   return (
-    <View className='mt-5'>
-      <Text className='text-3xl font-bold'>Typescript Nasa Project!</Text>
+    <SafeAreaView className='mt-10'>
       <StatusBar style='auto' />
-      <Header />
-    </View>
+      {/* Traemos las views */}
+      <Home />
+    </SafeAreaView>
   );
 }
