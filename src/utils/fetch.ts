@@ -1,18 +1,21 @@
-import axios from 'axios';
-const API_KEY = 'SLsDcYVRqA4Z8rQNlsLfkngffBmkyOfO458Y6dea';
+const API_KEY1 = 'SLsDcYVRqA4Z8rQNlsLfkngffBmkyOfO458Y6dea';
+const API_KEY2 = 'Gwz2Vutd71eEWq3ud2Qgg84XWmPdRuuoI56HJkSR';
 const API_URL = 'https://api.nasa.gov/planetary/apod';
 
 export const fetchData = async (urlParams?: string) => {
   try {
-    const response = await axios.get(
-      `${API_URL}?api_key=${API_KEY}${
-        typeof urlParams !== 'undefined' && urlParams?.length > 0
-          ? urlParams
-          : ''
-      }`
+    const response = await fetch(
+      `${API_URL}?api_key=${API_KEY2}${urlParams ? urlParams : ''}`
     );
-    return response.data;
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Request failed');
+    }
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };

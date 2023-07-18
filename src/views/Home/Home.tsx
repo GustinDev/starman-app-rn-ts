@@ -1,36 +1,68 @@
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 import { fetchData } from '../../utils/fetch';
-import { Logs } from 'expo';
 import Today from '../../components/Today/Today';
 import { TodaysDataProps } from '../../types';
+import { format, sub } from 'date-fns';
+import FiveCards from '../../components/FiveCards/FiveCards';
+//CONSTANTS DATA
+import { fiveDaysConstData, todaysConstData } from '../../constants/data';
 
 type Props = {};
 
 const Home = (props: Props) => {
   const [todaysData, setTodaysData] = useState<TodaysDataProps>({});
+  //El type es un arreglo de la data definida.
+  const [fiveDaysData, setFiveDaysData] = useState<TodaysDataProps[]>([]);
 
-  useEffect(() => {
-    const loadTodaysImage = async () => {
-      try {
-        const todaysImage = await fetchData();
-        setTodaysData(todaysImage);
-      } catch (error) {
-        console.log(error);
-        setTodaysData({});
-      }
-    };
+  //API: Limite de 30-50 recargas por día. Por eso usamos las constantes mejor.
 
-    loadTodaysImage();
-  }, []);
+  // useEffect(() => {
+  //   const fetchDataAndLoad = async () => {
+  //     try {
+  //       const date = new Date();
+  //       const todaysDate = format(date, 'yyyy-MM-dd');
+  //       const fiveDaysAgoDate = format(sub(date, { days: 5 }), 'yyyy-MM-dd');
+  //       // Check if the data is already loaded
+  //       if (!todaysData || Object.keys(todaysData).length === 0) {
+  //         const todaysImage = await fetchData();
+  //         setTodaysData(todaysImage);
+  //       }
+  //       // Check if the data is already loaded
+  //       if (fiveDaysData.length === 0) {
+  //         const allFiveDaysData = await fetchData(
+  //           `&start_date=${fiveDaysAgoDate}&end_date=${todaysDate}`
+  //         );
+  //         setFiveDaysData(allFiveDaysData);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchDataAndLoad();
+  // }, [todaysData, fiveDaysData]);
 
   return (
-    <View>
+    <ScrollView>
       <Header />
-      <Text>Today's photo: </Text>
-      <Today {...todaysData} />
-    </View>
+      <Text className='ml-10 mt-5 font-bold text-xl underline'>
+        Today's space image:
+      </Text>
+      <Today {...todaysConstData} />
+      <Text className='ml-10 mt-2 font-bold text-xl underline mb-2'>
+        Last Five Days' Images:
+      </Text>
+      <View className='mx-10'>
+        {fiveDaysConstData.map((item, index) => (
+          <FiveCards
+            key={index}
+            title={item.title}
+            date={item.date}
+          />
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 
