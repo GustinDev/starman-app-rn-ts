@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Button } from 'react-native';
 import { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 import { fetchData } from '../../utils/fetch';
