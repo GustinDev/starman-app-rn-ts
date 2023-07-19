@@ -8,6 +8,7 @@ import { format, sub } from 'date-fns';
 import FiveCards from '../../components/FiveCards/FiveCards';
 //CONSTANTS DATA
 import { fiveDaysConstData, todaysConstData } from '../../constants/data';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = {};
 
@@ -44,25 +45,26 @@ const Home = (props: Props) => {
   // }, [todaysData, fiveDaysData]);
 
   return (
-    <ScrollView>
-      <Header />
-      <Text className='ml-10 mt-5 font-bold text-xl underline'>
-        Today's space image:
-      </Text>
-      <Today {...todaysConstData} />
-      <Text className='ml-10 mt-2 font-bold text-xl underline mb-2'>
-        Last Five Days' Images:
-      </Text>
-      <View className='mx-10'>
-        {fiveDaysConstData.map((item, index) => (
-          <FiveCards
-            key={index}
-            title={item.title}
-            date={item.date}
-          />
-        ))}
-      </View>
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView>
+        <Header />
+        <Text className='ml-10 mt-5 font-bold text-xl underline'>
+          Today's space image:
+        </Text>
+        <Today {...todaysConstData} />
+        <Text className='ml-10 mt-2 font-bold text-xl underline mb-2'>
+          Last Five Days' Images:
+        </Text>
+        <View className='mx-10'>
+          {fiveDaysConstData.map((item, index) => (
+            <FiveCards
+              key={index}
+              {...item}
+            />
+          ))}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

@@ -7,3 +7,9 @@ export type TodaysDataProps = {
   title?: string;
   url?: string;
 };
+
+//Le decimos a TS los tipos que va a recibir cada Screen - View:
+export type RootStackParams = {
+  Home: undefined;
+  Detail: TodaysDataProps;
+};
